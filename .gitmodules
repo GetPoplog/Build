@@ -7,3 +7,6 @@
 [submodule "Corepops"]
 	path = Corepops
 	url = ../Corepops.git
+[submodule "Seed"]
+	path = Seed
+	url = ../Seed.git
