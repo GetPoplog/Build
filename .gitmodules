@@ -4,3 +4,6 @@
 [submodule "Base"]
 	path = Base
 	url = ../Base.git
+[submodule "Corepops"]
+	path = Corepops
+	url = ../Corepops.git
