@@ -19,7 +19,7 @@ clean:
 
 .PHONY: build
 build:
-	$(MAKE) -C Seed use-repos
+	[[ -d Seed/_build/Base ]] || $(MAKE) -C Seed use-repos
 	$(MAKE) -C Seed build
 
 .PHONY: tarball
