@@ -1,7 +1,5 @@
 .PHONY: all
-all:
-	$(MAKE) build
-	# Target "all" completed
+all: build
 
 .PHONY: help
 help:
@@ -9,8 +7,6 @@ help:
 	#   clean
 	#   build
 	#   install
-	#   jumpstart-ubuntu [^] - installs the packages a Ubuntu system needs.
-	#   jumpstart-fedora [^] - installs the packages a Fedora system needs.
 	#   jumpstart-* [^] - and more, try `make help-jumpstart`.
 
 .PHONY: help-jumpstart
@@ -25,3 +21,16 @@ clean:
 build:
 	$(MAKE) -C Seed use-repos
 	$(MAKE) -C Seed build
+
+.PHONY: tarball
+tarball:
+	$(MAKE) -C Seed clean
+	$(MAKE) -C Seed use-repos
+	$(MAKE) -C Seed download
+	VERSION="$$(cat Seed/VERSION)"; \
+	POPLOG_TAR_DIR="poplog-$$VERSION"; \
+	mkdir -p "$$POPLOG_TAR_DIR"; \
+	cp -r Seed Makefile README.md "$$POPLOG_TAR_DIR"; \
+	tar -czvf "poplog-$$VERSION.tar.gz" "$$POPLOG_TAR_DIR"; \
+	rm -rf "$$POPLOG_TAR_DIR"
+
