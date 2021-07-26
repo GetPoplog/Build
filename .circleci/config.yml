@@ -1,0 +1,35 @@
+version: 2
+jobs:
+  update_submodules:
+    docker:
+      - image: cimg/base:2021.04
+    steps:
+      - checkout
+      - run:
+          name: Update submodules
+          command: |
+            git config --global user.email "circleci@example.com"
+            git config --global user.name "CircleCI"
+            git config --global push.default simple
+            CURRENT_BRANCH="$(git rev-parse --abbrev-ref HEAD)"
+
+            git submodule update --init --recursive
+            git submodule foreach git checkout main
+            git submodule foreach git pull
+            git diff --quiet || { git commit -am "[skip ci] Update submodules $(date '+%Y-%m-%d-%H:%M')"; git push -u origin "$CURRENT_BRANCH"; }
+
+workflows:
+  version: 2
+  commit:
+    jobs:
+      - update_submodules
+  nightly:
+    triggers:
+      - schedule:
+          cron: "0 0 * * *"
+          filters:
+            branches:
+              only:
+                - master
+    jobs:
+      - update_submodules
