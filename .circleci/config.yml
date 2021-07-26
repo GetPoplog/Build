@@ -5,6 +5,10 @@ jobs:
       - image: cimg/base:2021.04
     steps:
       - checkout
+      - add_ssh_keys:
+          fingerprints:
+            0b:65:fa:b5:a8:41:64:61:e8:de:c7:66:0f:4b:37:01
+
       - run:
           name: Update submodules
           command: |
