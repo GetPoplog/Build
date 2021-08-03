@@ -19,7 +19,8 @@ clean:
 
 .PHONY: build
 build:
-	[ -d Seed/_download/Base ] || $(MAKE) -C Seed use-repos
+	[ -d Seed/_download/Base ] || cp -rpP Base Seed/_download/Base
+	[ -d Seed/_download/Corepops ] || cp -rpP Base Seed/_download/Corepops
 	$(MAKE) -C Seed build
 
 .PHONY: install
